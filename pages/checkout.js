@@ -66,7 +66,7 @@ const Checkout = () => {
       <h2>Checkout</h2>
       <br></br>
       <ProductsContainer>
-        {(usersCart ? usersCart : cart).map((product) => (
+        {(usersCart ? usersCart.lineItems : cart).map((product) => (
           <>
             <Product>
               <p>

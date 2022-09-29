@@ -1,17 +1,18 @@
 import React from "react";
 import { useRouter } from "next/router";
-import SingleItemView from "../../src/components/SingleItemView";
+import { SingleItemView, Loading, Error } from "../../src/components/";
 import { useGetSingleSushiQuery } from "../../src/redux/reducers/apiSlice";
 import { motion } from "framer-motion";
-import { Loading } from "../../src/components";
 
 export default function SingleSushiView() {
   const router = useRouter();
   const { id } = router.query;
   const { data } = useGetSingleSushiQuery(id);
 
-  if (!data) {
+  if (data === undefined) {
     return <Loading />;
+  } else if (data === null) {
+    return <Error />;
   } else {
     return (
       <motion.div

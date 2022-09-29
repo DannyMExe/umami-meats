@@ -1,13 +1,14 @@
-/* mainButton, secondaryButton, incrementContainer, incrementCart */
+@import url('https://fonts.googleapis.com/css2?family=Scope+One&family=Vollkorn+SC&display=swap');
 
-/* Increment example: */
-/*
-<div class="incrementContainer incrementCart">
-    <button class="incrementButton">-</button>
-    <p>0</p>
-    <button class="incrementButton">+</button>
-</div>
-*/
+body {
+  font-family: 'Vollkorn SC', sans-serif;
+}
+body .hfLinks {
+  font-family: 'Scope One', serif;
+}
+body .productDesc {
+  font-family: Arial sans-serif;
+}
 
 /* MAIN BUTTONS */
 .mainButton,

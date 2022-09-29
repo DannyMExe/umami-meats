@@ -1,25 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const fetchUsersCart = async (id) => {
-  console.log("sinide fetch", id);
-  const { data } = await axios.get(`/api/orders/${id}`);
-  return data;
-};
-
-export const fetchUsersCartThunk = createAsyncThunk(
-  "cart/fetchCart",
-  async (id) => {
-    try {
-      let data = await fetchUsersCart(id);
-      console.log("inside thunk", data);
-      return data;
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
-);
-
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
@@ -38,6 +19,7 @@ const cartSlice = createSlice({
       !found && state.cart.push(action.payload);
     },
     removeFromCart: (state, action) => {
+      console.log(action.payload);
       state.cart = state.cart.filter(
         (item) => item.productId !== action.payload
       );
@@ -46,12 +28,6 @@ const cartSlice = createSlice({
       state.cart = [];
     },
     // for logging out only
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchUsersCartThunk.fulfilled, (state, action) => {
-      console.log("inside reducer", action.payload);
-      state.usersCart = action.payload.lineItems;
-    });
   },
 });
 

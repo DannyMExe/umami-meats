@@ -113,18 +113,22 @@ const Checkout = styled.div`
 
 function Cart() {
   const { cart } = useSelector((state) => state.cart);
-  const { cart: usersCart, cartId } = useSelector((state) => state.usersCart);
+  let { cart: usersCart, isLoading } = useSelector((state) => state.usersCart);
   const { isLoggedIn } = useSelector((state) => state.user);
-  const { data, isSuccess } = useGetSingleOrderQuery(
-    isLoggedIn ? cartId : skipToken
-  );
+  // const { data } = useGetSingleOrderQuery(
+  //   isLoggedIn ? usersCart.id : skipToken
+  // );
+
+  useEffect(() => {
+    cart.forEach((product) => console.log(product));
+  }, [cart]);
 
   const [deleteLineItem] = useDeleteLineItemMutation();
   const [updateLineItem] = useUpdateLineItemMutation();
   const dispatch = useDispatch();
 
   const handleRemoveLineItem = async (payload) => {
-    console.log(payload);
+    console.log(usersCart, "HERE", payload);
     dispatch(removeFromUsersCart(payload.productId));
     await deleteLineItem(payload.id);
   };
@@ -133,9 +137,9 @@ function Cart() {
     let newData = { ...payload };
     let prevQty = payload.qty;
     await updateLineItem({
-      id: payload.id,
       data: {
-        orderId: cartId,
+        id: payload.id,
+        orderId: usersCart.id,
         productId: payload.productId,
         qty: (prevQty += num),
       },
@@ -143,12 +147,16 @@ function Cart() {
     dispatch(addToUsersCart({ newData, num }));
   };
 
+  // useEffect(() => {
+  //   console.log(usersCart);
+  // },[usersCart])
+
   return (
     <MainContainer>
       <h2>Your Cart</h2>
       <ProductsContainer>
-        {(isLoggedIn && isSuccess ? usersCart : cart).map((product, idx) => (
-          <div key={product.productId}>
+        {(usersCart ? usersCart.lineItems : cart)?.map((product, idx) => (
+          <div key={product.id}>
             <Image src={product.product.img} alt="sushi" />
             <DetailsContainer>
               {" "}
@@ -253,7 +261,11 @@ function Cart() {
               </IncrementAndPrice>
             </DetailsContainer>
             {/* places a line below each item unless it is the last in the cart */}
-            {idx + 1 === (isLoggedIn ? usersCart : cart).length ? "" : <hr />}
+            {idx + 1 === (isLoggedIn ? usersCart.lineItems : cart).length ? (
+              ""
+            ) : (
+              <hr />
+            )}
           </div>
         ))}
       </ProductsContainer>
@@ -266,7 +278,7 @@ function Cart() {
             <p>
               $
               {Math.round(
-                ((isLoggedIn ? usersCart : cart).reduce(
+                ((isLoggedIn ? usersCart : cart)?.lineItems?.reduce(
                   (prev, curr) =>
                     Number(curr.product.price) * Number(curr.qty) +
                     Number(prev),

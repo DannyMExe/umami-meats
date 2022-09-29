@@ -159,7 +159,7 @@ export const apiSlice = createApi({
     }),
     updateLineItem: builder.mutation({
       query: (payload) => ({
-        url: `/api/lineItems/${payload.id}`,
+        url: `/api/lineItems/${payload.data.id}`,
         method: "PUT",
         body: payload.data,
       }),

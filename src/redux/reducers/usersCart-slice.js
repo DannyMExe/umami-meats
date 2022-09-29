@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const fetchCart = async (id) => {
-  const { data } = await axios.get(`/api/orders/${id}`);
+  // const { data } = await axios.get(`/api/orders/${id}`);
+  const {data} = await axios.get(`/api/users/${id}`)
   console.log("line 6", data);
   return data;
 };
@@ -29,22 +30,22 @@ const usersCartSlice = createSlice({
   reducers: {
     initializeCart: (state, action) => {
       console.log("initializing", action.payload);
-      state.cartId = action.payload.id;
-      state.cart = action.payload.lineItems;
+      state.id = action.payload.id;
+      state.cart = action.payload;
     },
     addToUsersCart: (state, action) => {
       console.log("adding item", action.payload);
       let found = false;
-      state.cart.map((obj, idx) => {
-        if (obj.productId === action.payload.newData.productId) {
-          state.cart[idx].qty += action.payload.num;
+      state.cart.lineItems.map((obj, idx) => {
+        if (obj?.productId === action.payload.newData.productId) {
+          state.cart.lineItems[idx].qty += action.payload.num;
           found = true;
         }
       });
-      !found && state.cart.push(action.payload.newData);
+      !found && state.cart.lineItems.push(action.payload.newData);
     },
     removeFromUsersCart: (state, action) => {
-      state.cart = state.cart.filter(
+      state.cart.lineItems = state.cart.lineItems.filter(
         (item) => item.productId !== action.payload
       );
     },

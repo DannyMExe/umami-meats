@@ -5,7 +5,9 @@ import { useUpdateUserMutation } from "../../src/redux/reducers/apiSlice";
 import { RemoveSSRFromComponent } from "../../src/utils";
 
 const EditPageContainer = styled.div`
-    margin: 0.6em 1em;
+    max-width: 750px;
+	margin: 1em auto;
+
     h2 {
         margin-bottom: 0.3em;
     }
@@ -43,7 +45,17 @@ const EditPageContainer = styled.div`
     }
 `;
 const UpdatePasswordContainer = styled.div`
+    form {
+        div {
+            margin-top: 0.7em;
 
+            display: flex;
+            justify-content: center;
+            button {
+                margin: auto 0.7em;
+            }
+        }
+    }
 `;
 
 function EditAccount() {
@@ -122,7 +134,7 @@ function EditAccount() {
                         Email:
                         <input type="text" value={mainForm.email} onChange={handleFormChange} name="email"/>
                     </label>
-                    <button type="submit">Submit</button>
+                    <button type="submit" className="mainButton">Submit</button>
                 </form>
                 <hr />
                 <p className={pwDisplay ? "updatePass" : "passHidden"} onClick={() => setPwDisplay(true)}>Change password</p>
@@ -139,8 +151,10 @@ function EditAccount() {
                         Confirm new password:
                         <input type="password" value={pwForm.confirmPassword} onChange={handlePasswordChange} name="confirmPassword"/>
                     </label>
-                    <button type="submit">Update Password</button>
-                    <button onClick={() => setPwDisplay(false)}>Cancel</button>
+                    <div>
+                    <button type="submit" className="secondaryButton">Update Password</button>
+                    <button onClick={() => setPwDisplay(false)} className="secondaryButton">Cancel</button>
+                    </div>
                 </form>
             </UpdatePasswordContainer>
         : ""}

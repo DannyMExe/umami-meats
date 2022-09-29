@@ -21,6 +21,7 @@ const MainProductContainer = styled.div`
     margin: 0.4em;
   }
   .desc {
+    font-style: normal;
     text-align: justify;
     margin-top: 0.8em;
   }
@@ -202,10 +203,8 @@ function SingleItemView({ type, data }) {
               </ProductInfoRight>
             </ProductContainerTop>
 
-            <p className="desc">{data.desc}</p>
+            <p className="desc productDesc ">{data.desc}</p>
           </MainProductContainer>
-
-          {/* Recommended Products can go down here if we have time */}
         </>
       ) : (
         <Loading />

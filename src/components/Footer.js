@@ -21,6 +21,7 @@ const FooterContainer = styled.div`
   }
   p {
     padding: 0 0.4em 0.15em;
+    margin-top: 0.27em;
     :hover {
         color: lightgray;    
     }
@@ -39,7 +40,7 @@ export default function Footer() {
   }
 
   return (
-    <FooterContainer>
+    <FooterContainer className="hfLinks">
       {isAdmin &&
         <Link href="/admin">
           <LinkContainer>
