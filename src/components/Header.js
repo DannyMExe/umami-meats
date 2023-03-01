@@ -50,7 +50,7 @@ const HeaderTop = styled.div`
   }
 `;
 
-// const mobileLogoTextWidth = "3.62em";
+const mobileLogoTextWidth = "3.62em";
 
 const HeaderMain = styled.div`
   margin-top: -1px;
@@ -316,7 +316,7 @@ function Header() {
           <Link href="/cart">
             <LinkContainer>
               <FaShoppingCart />
-              <p>{`Cart (${cart.lineItems?.length})`}</p>
+              <p>{`Cart (${cart.length})`}</p>
             </LinkContainer>
           </Link>
         )}

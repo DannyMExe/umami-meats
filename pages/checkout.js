@@ -50,10 +50,17 @@ const Checkout = () => {
 	const [updateOrder] = useUpdateOrderMutation();
 	console.log(usersCart);
 
-	const checkout = (id) => {
+	const checkout = async (id) => {
 		console.log(id);
 		updateOrder({ data: { isCart: false }, id });
 		//maybe redirect to home page
+		let { data } = await createNewOrder({
+			userId: user.id,
+			isCart: true,
+			address: 'some address',
+		});
+		//maybe redirect to home page
+		dispatch(initializeCart({ ...data, lineItems: [] }));
 	};
 
 	// const [total, setTotal] = useState(0)
@@ -84,15 +91,14 @@ const Checkout = () => {
 			</ProductsContainer>
 			<TotalContainer>
 				<h2>Total:</h2>
-					{Math.round(
-						((usersCart ? usersCart : cart).lineItems.reduce(
-							(prev, curr) =>
-								curr.product.price * curr.qty + prev,
-							0
-						) +
-							Number.EPSILON) *
-							100
-					) / 100}
+				{Math.round(
+					((usersCart ? usersCart : cart).lineItems.reduce(
+						(prev, curr) => curr.product.price * curr.qty + prev,
+						0
+					) +
+						Number.EPSILON) *
+						100
+				) / 100}
 			</TotalContainer>
 			<ConfirmOrder>
 				<button

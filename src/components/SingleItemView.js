@@ -94,7 +94,7 @@ function SingleItemView({ type, data }) {
     // if it does, we are able to call PUT
     // if it dosent, we are calling POST
     console.log(usersCart);
-    const existingItem = usersCart.find(
+    const existingItem = usersCart.lineItems.find(
       ({ productId }) => productId === payload.productId
     );
 
@@ -108,6 +108,7 @@ function SingleItemView({ type, data }) {
       await updateLineItem({
         id: existingItem.id,
         data: {
+          id: existingItem.id,
           orderId: cartId,
           productId: payload.productId,
           qty: (prevQty += payload.qty),
