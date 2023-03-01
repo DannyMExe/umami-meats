@@ -4,7 +4,7 @@ export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({
     baseUrl: 
-    "https://umamimeats.herokuapp.com",
+    "https://umami-meats.vercel.app",
       // baseUrl: process.env.BASE_URL || "http://localhost:3000",
   }),
   tagTypes: [
